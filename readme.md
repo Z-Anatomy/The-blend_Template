@@ -23,3 +23,9 @@ Please Mention the following:
 4. Instructions to recreate the issue
 5. Any other information
 
+
+## Add-on Script
+There are three files in add-on script 
+1. Definition: script used to download wikipedia article for creating definitions
+2. Translation: script used to translate english, -> other language
+3. CreatingLabels: Create labels  
