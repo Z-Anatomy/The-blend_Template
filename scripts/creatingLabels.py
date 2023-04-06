@@ -140,15 +140,3 @@ class OBJECT_OT_make_label(bpy.types.Operator):
         font_object.select_set(True)
         font_object.hide_set(False)
         return {"FINISHED"}
-
-
-def register():
-    bpy.utils.register_class(OBJECT_OT_make_label)
-
-
-def unregister():
-    bpy.utils.unregister_class(OBJECT_OT_make_label)
-
-
-if __name__ == "__main__":
-    register()

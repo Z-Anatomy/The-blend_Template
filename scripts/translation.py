@@ -136,15 +136,3 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
     def invoke(self, context, event):
         wm = context.window_manager
         return wm.invoke_props_dialog(self)
-
-
-def register():
-    bpy.utils.register_class(OBJECT_OT_translate_atlas)
-
-
-def unregister():
-    bpy.utils.unregister_class(OBJECT_OT_translate_atlas)
-
-
-if __name__ == "__main__":
-    register()

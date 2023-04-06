@@ -1,20 +1,14 @@
-import re
-import urllib.parse
-import requests
-import json
+# script for the definitions
+# Download the data from wikipedia
+
 import bpy
-bl_info = {
-    "name": "Wiki Downloader",
-    "author": "Your Name Here",
-    "version": (1, 0),
-    "blender": (2, 80, 0),
-    "location": "Text Editor > Text > Wiki Download",
-    "description": "Downloads texts from Wikipedia based on given phrases",
-    "category": "Text Editor",
-}
+import json
+import requests
+import urllib.parse
+import re
 
 
-class WikiDownloadOperator(bpy.types.Operator):
+class TEXT_OT_wiki_download(bpy.types.Operator):
     """Wiki download"""
     bl_idname = "text.wiki_download"
     bl_label = "Download Texts From Wiki"
@@ -62,7 +56,7 @@ class WikiDownloadOperator(bpy.types.Operator):
 
             # 3. get extract
             # extract_url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&titles={urllib.parse.quote_plus(title)}&prop=extracts&exintro&explaintext"
-            # extract
+            # extract_url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&titles={urllib.parse.quote_plus(title)}&prop=extracts&explaintext"
             extract_url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&titles={urllib.parse.quote_plus(title)}&prop=extracts|info&explaintext&inprop=url"
 
             resp = requests.get(extract_url).json()
@@ -81,16 +75,44 @@ class WikiDownloadOperator(bpy.types.Operator):
                 text_edit = bpy.data.texts[title]
                 text_edit.clear()
             else:
-                text_edit = bpy.data.texts
+                text_edit = bpy.data.texts.new(title)
 
+            # Delete unwanted content
+            extract += '\n'*3
+            for paragraph in ("== Additional images ==", "== See also ==", "== References ==", "== External links =="):
+                extract = re.sub(rf'{paragraph}\n+.*?\n\n\n',
+                                 '', extract, flags=re.MULTILINE | re.DOTALL)
 
-def register():
-    bpy.utils.register_class(WikiDownloadOperator)
+            extract = re.sub(r'( ==\n)(.?)', r'\1\n\2',
+                             extract, flags=re.MULTILINE)
+            extract = re.sub(r'( ===\n)(.?)', r'\1\n\2',
+                             extract, flags=re.MULTILINE)
+            extract = re.sub(r'  ', r' ', extract)
+            extract = re.sub(r'(\. )([A-Z])', r'\1\n\n\2', extract)
+            extract = re.sub(r' \[Fig\. \d+\]', r'', extract)
 
+            body = "\n"*2 + title.upper() + "\n"*3 + extract + "\n" + wiki_url
+            text_edit.write(body)
+            text_edit.cursor_set(0)
 
-def unregister():
-    bpy.utils.unregister_class(WikiDownloadOperator)
+            # path_to_blend = bpy.path.abspath('//')
+            # Path(os.path.join(path_to_blend, 'wiki_download')).mkdir(parents=True, exist_ok=True)
+            # with open(os.path.join(path_to_blend, 'wiki_download', title+'.txt'), 'w') as f:
+            #     f.write(body)
 
+        if 'Wiki Results' in bpy.data.texts:
+            wiki_results = bpy.data.texts['Wiki Results']
+            wiki_results.clear()
+        else:
+            wiki_results = bpy.data.texts.new('Wiki Results')
+        body = "===== Wiki download report =====\n"
+        body += " ## Partial matches (check manualy) ##\n"
+        body += "\n".join(partial_matches) + "\n"*5
+        body += " ## Not matched ##\n"
+        body += "\n".join(not_matched) + "\n"*5
+        body += " ## Fully matched ##\n"
+        body += "\n".join(full_matches) + "\n"*5
+        wiki_results.write(body)
+        wiki_results.cursor_set(0)
 
-if __name__ == "__main__":
-    register()
+        return {"FINISHED"}
