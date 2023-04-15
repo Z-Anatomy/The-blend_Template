@@ -1,0 +1,46 @@
+import bpy
+
+# Get or create the 'List_Definitions' text
+if 'List_Definitions' in bpy.data.texts:
+    List_Definitions = bpy.data.texts['List_Definitions']
+    List_Definitions.clear()
+else:
+    List_Definitions = bpy.data.texts.new('List_Definitions')
+
+# Get or create the 'List_3D' text
+if 'List_3D' in bpy.data.texts:
+    List_3D = bpy.data.texts['List_3D']
+    List_3D.clear()
+else:
+    List_3D = bpy.data.texts.new('List_3D')
+
+# Get or create the 'List_labels' text
+if 'List_labels' in bpy.data.texts:
+    List_labels = bpy.data.texts['List_labels']
+    List_labels.clear()
+else:
+    List_labels = bpy.data.texts.new('List_labels')
+
+# Store the content of texts and objects in variables
+texts = ""
+for text in bpy.data.texts:
+    texts += text.name + '\n'
+
+objs = ""
+labels = ""
+for obj in bpy.data.objects:
+    # Exclude objects whose name ends with '.t', '.s', or '.g'
+    if not obj.name.endswith(('.t', '.s', '.g')):
+        # Remove suffixes from object names
+        obj_name = obj.name.split('.')[0]
+        # Remove any parts of the name following a dot that are not a space
+        if '.' in obj_name and not obj_name.split('.')[1].isspace():
+            obj_name = obj_name.split('.')[0]
+        objs += f'{obj_name}\n'
+    else:
+        labels += f'{obj.name.split(".")[0]}\n'
+
+# Write the content of the variables to the corresponding texts
+List_Definitions.write(texts)
+List_3D.write(objs)
+List_labels.write(labels)
