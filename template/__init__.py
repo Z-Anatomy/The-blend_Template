@@ -383,6 +383,8 @@ fonts = {
     'Deutsch': 'Bfont',
     'Polski': 'Bfont',
     '中國人': 'YuMincho-Regular',
+    'Hindi': 'Bfont',
+    'Italian': 'Bfont',
 
 }
 
@@ -415,6 +417,8 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
         ('Deutsch', 'Deutsch', '', 6),
         ('Polski', 'Polski', '', 7),
         ('中國人', '中國人', '', 8),
+        ('Hindi', 'Hindi', '', 9),
+        ('Italian', 'Italian', '', 10)
     ],
         default='English',
         name="Language")
