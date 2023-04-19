@@ -10,7 +10,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 import os
 from bpy.app.handlers import persistent
 import json
@@ -578,9 +577,12 @@ def clean_name(name):
 fonts = {
     'English': 'Bfont',
     'Latin': 'Bfont',
+    'TA2ID': 'Bfont',
     'Français': 'Bfont',
     'Español': 'Bfont',
     'Portugues': 'Bfont',
+    'Italiano': 'Bfont',
+    'Hindi': 'Kruti Dev 010 Regular',
 }
 
 
@@ -602,12 +604,18 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
     bl_label = "Translate"
     bl_options = {'REGISTER', 'UNDO'}
 
+    # English;Latin;Français;Español;Portugues
+    # English;Latin;TA2ID;Français;Español;Portugues;Italiano;Hindi
+
     lang: bpy.props.EnumProperty(items=[
         ('English', 'English', '', 0),
         ('Latin', 'Latin', '', 1),
-        ('Français', 'Français', '', 2),
-        ('Español', 'Español', '', 3),
-        ('Portugues', 'Portugues', '', 4),
+        ('TA2ID', 'TA2ID', '', 2),
+        ('Français', 'Français', '', 3),
+        ('Español', 'Español', '', 4),
+        ('Portugues', 'Portugues', '', 5),
+        ('Italiano', 'Italiano', '', 6),
+        ('Hindi', 'Hindi', '', 7),
     ],
         default='English',
         name="Language")
