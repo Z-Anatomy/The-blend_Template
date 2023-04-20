@@ -604,9 +604,6 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
     bl_label = "Translate"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # English;Latin;Français;Español;Portugues
-    # English;Latin;TA2ID;Français;Español;Portugues;Italiano;Hindi
-
     lang: bpy.props.EnumProperty(items=[
         ('English', 'English', '', 0),
         ('Latin', 'Latin', '', 1),
@@ -635,7 +632,7 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                     ob.name = eng_name + ending
                 elif ob.type == "FONT":
                     ob.name = ob.data.name
-                    ob.data.body = clean_name(ob.data.name)[0]
+                    ob.data.body = clean_name(ob.data.name)[0].upper()
                     ob.data.font = bpy.data.fonts['Bfont']
                     if not ob.name.endswith('.st'):
                         ob.data.size = 0.003
@@ -669,9 +666,9 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                 eng_name, _ = clean_name(ob.data.name)
                 if eng_name in trans_dict:
                     new_name = trans_dict[eng_name][self.lang]
-                    ob.data.body = new_name
+                    ob.data.body = new_name.upper()
 
-                    # new_name = first_n_bytes(new_name)
+                    new_name = first_n_bytes(new_name)
                     ob.name = new_name + ending
 
                     try:
