@@ -36,7 +36,7 @@ bl_info = {
 }
 
 
-label_elements = {"-txt", ".t", ".j"}
+label_elements = {"-txt", ".t", ".j", ".s", '.i'}
 
 
 def family_all(object):
@@ -635,7 +635,7 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                     ob.name = eng_name + ending
                 elif ob.type == "FONT":
                     ob.name = ob.data.name
-                    ob.data.body = clean_name(ob.data.name)[0].upper()
+                    ob.data.body = clean_name(ob.data.name)[0]
                     ob.data.font = bpy.data.fonts['Bfont']
                     if not ob.name.endswith('.st'):
                         ob.data.size = 0.003
@@ -669,9 +669,9 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                 eng_name, _ = clean_name(ob.data.name)
                 if eng_name in trans_dict:
                     new_name = trans_dict[eng_name][self.lang]
-                    ob.data.body = new_name.upper()
+                    ob.data.body = new_name
 
-                    new_name = first_n_bytes(new_name)
+                    # new_name = first_n_bytes(new_name)
                     ob.name = new_name + ending
 
                     try:
