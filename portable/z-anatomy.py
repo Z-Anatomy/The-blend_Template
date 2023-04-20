@@ -28,7 +28,7 @@ bl_info = {
     "name": "Z-Anatomy",
     "author": "Marcin Zieliński",
     "description": "Shows all objects that contains 'always_front' front faced and 'always_show' are never hidden in viewport. Makes hiding objects inheritable.",
-    "blender": (2, 80, 0),
+    "blender": (3, 5, 0),
     "version": (0, 0, 1),
     "location": "",
     "warning": "",
@@ -582,7 +582,7 @@ fonts = {
     'Español': 'Bfont',
     'Portugues': 'Bfont',
     'Italiano': 'Bfont',
-    'Hindi': 'Kruti Dev 010 Regular',
+    'Hindi': 'Akshar Unicode Regular',
 }
 
 
@@ -681,7 +681,7 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                             type={"WARNING"}, message=f"Font {fonts[self.lang]} not found. Add it manualy.")
 
                     if not ob.name.endswith('.st'):
-                        if self.lang == '中國人':
+                        if self.lang == 'Hindi':
                             ob.data.size = 0.006
                         else:
                             ob.data.size = 0.003
