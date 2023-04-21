@@ -376,16 +376,12 @@ def clean_name(name):
 fonts = {
     'English': 'Bfont',
     'Latin': 'Bfont',
+    'TA2ID': 'Bfont',
     'Français': 'Bfont',
     'Español': 'Bfont',
     'Portugues': 'Bfont',
-    'Nederlands': 'Bfont',
-    'Deutsch': 'Bfont',
-    'Polski': 'Bfont',
-    '中國人': 'YuMincho-Regular',
-    'Hindi': 'Bfont',
-    'Italian': 'Bfont',
-
+    'Italiano': 'Bfont',
+    'Hindi': 'Akshar Unicode Regular',
 }
 
 
@@ -410,15 +406,12 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
     lang: bpy.props.EnumProperty(items=[
         ('English', 'English', '', 0),
         ('Latin', 'Latin', '', 1),
-        ('Français', 'Français', '', 2),
-        ('Español', 'Español', '', 3),
-        ('Portugues', 'Portugues', '', 4),
-        ('Nederlands', 'Nederlands', '', 5),
-        ('Deutsch', 'Deutsch', '', 6),
-        ('Polski', 'Polski', '', 7),
-        ('中國人', '中國人', '', 8),
-        ('Hindi', 'Hindi', '', 9),
-        ('Italian', 'Italian', '', 10)
+        ('TA2ID', 'TA2ID', '', 2),
+        ('Français', 'Français', '', 3),
+        ('Español', 'Español', '', 4),
+        ('Portugues', 'Portugues', '', 5),
+        ('Italiano', 'Italiano', '', 6),
+        ('Hindi', 'Hindi', '', 7),
     ],
         default='English',
         name="Language")
@@ -484,7 +477,7 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
                             type={"WARNING"}, message=f"Font {fonts[self.lang]} not found. Add it manualy.")
 
                     if not ob.name.endswith('.st'):
-                        if self.lang == '中國人':
+                        if self.lang == 'Hindi':
                             ob.data.size = 0.006
                         else:
                             ob.data.size = 0.003
