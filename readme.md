@@ -1,31 +1,33 @@
-This repository contains all the Available Blender Scripts for Z-anatomy Blender Plugin.
+# Z-Anatomy
 
-Difference Portable Script and Template Script
+This repository contains all Blender scripts for the Z-Anatomy Blender plugin.
 
-https://www.diffchecker.com/LYQ2BQZq/
+View the differences between the portable script and template script with [diffchecker](https://www.diffchecker.com/LYQ2BQZq/).
 
-The Template Script has more translations than portable script
+The template script has more translations than the portable script.
 
-## Where Did i take the two scripts?
+## Where did I take the two scripts?
 
-For the Portable version, you can just go to the text editor and search for the `z-anatomy.py`
+For the portable version, you can just go to the text editor and search for the file `z-anatomy.py`.
 
-For the Template version, `__init__.py` was taken from the downloaded template file `Z-Anatomy_Template` > `Z-Anatomy` > `__init__.py`
+For the template version, `__init__.py` was taken from the downloaded template file `Z-Anatomy_Template` > `Z-Anatomy` > `__init__.py`.
 
 ## Facings Issues For different OS
 
-If you face any issue for the plugin, you can create an new issue on [Here](https://github.com/Melodicpinpon/Z-Anatomy_Template/issues). 
+If you face any issue with the plugin, please create an new [issue](https://github.com/Z-Anatomy/blend-template/issues).
 
-Please Mention the following: 
-1. Your Operating System
+Please mention the following:
+
+1. Your operating system
 2. Your blender version
 3. Issue details
 4. Instructions to recreate the issue
 5. Any other information
 
+## Add-on script
 
-## Add-on Script
-There are three files in add-on script 
-1. Definition: script used to download wikipedia article for creating definitions
-2. Translation: script used to translate english, -> other language
-3. CreatingLabels: Create labels  
+There are three files in the add-on script.
+
+1. Definitions: script used to download Wikipedia articles for creating definitions
+2. Translation: script used to translate English to other languages
+3. CreatingLabels: create labels
