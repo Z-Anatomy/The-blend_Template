@@ -35,7 +35,7 @@ for text in bpy.data.texts:
 # get the obj and label
 for obj in bpy.data.objects:
     # Exclude objects whose name ends with '.t', '.s', or '.g'
-    if not obj.name.endswith(('.t', '.s', '.g')):
+    if not obj.name.endswith(('.t', '.s', '.g', '.i', '.j')):
         # Remove suffixes from object names
         obj_name = obj.name.split('.')[0]
         # Remove any parts of the name following a dot that are not a space

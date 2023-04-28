@@ -36,7 +36,7 @@ bl_info = {
 }
 
 
-label_elements = {"-txt", ".t", ".j", ".s", '.i'}
+label_elements = {"-txt", ".t", ".j", ".s", ".i"}
 
 
 def family_all(object):
