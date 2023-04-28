@@ -427,9 +427,6 @@ class OBJECT_OT_label_delta(bpy.types.Operator):
         # line.scale = (1/label.delta_scale.x, 1/label.delta_scale.y, 1/label.delta_scale.z)
         line.scale = (1, 1, 1)
 
-        if label.name.endswith('.s'):
-            label.delta_rotation_quaternion[0] = 360
-
         return {"FINISHED"}
 
 
