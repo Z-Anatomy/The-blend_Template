@@ -78,15 +78,15 @@ LIST_LABELS = []
 
 for i in TA2list:
     if i in Texts:
-        LIST_DEFINITIONS.append(i)
+        LIST_DEFINITIONS.append('x')
     else:
         LIST_DEFINITIONS.append("")
     if i in Objs:
-        LIST_3D.append(i)
+        LIST_3D.append('x')
     else:
         LIST_3D.append("")
     if i in Labels:
-        LIST_LABELS.append(i)
+        LIST_LABELS.append('x')
     else:
         LIST_LABELS.append("")
 
