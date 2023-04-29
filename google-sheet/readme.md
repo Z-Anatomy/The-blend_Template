@@ -8,6 +8,7 @@ For Video watch this video:
 2. It will create `List_Definitions`,  `List_3D`, and `List_labels`
 3. Copy the three lists and paste into the google sheet, while the column selected. 
 
+Note: DebugListCreator.py will generate a list with names. Its useful for debugging in the future. 
 
 
 ## Test  
@@ -37,8 +38,6 @@ Sheet file rows: 7298
 
 Test Pass : ✅
 Test Result Google sheet: https://docs.google.com/spreadsheets/d/11s7ksEkRhX7nf15v9EHMQiM4IXHkbxMy24mvb2Lr7Fk/edit?usp=sharing
-
-
 
 
 
