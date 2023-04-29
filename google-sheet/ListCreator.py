@@ -21,7 +21,7 @@ def print(data):
 
 # get the translation
 translations = bpy.data.texts['Translations'].as_string().splitlines()
-for line in translations[1:]:
+for line in translations[0:]:
     getfirst = line.split(";")
     TA2list.append(getfirst[0])
 
@@ -78,21 +78,21 @@ LIST_LABELS = []
 
 for i in TA2list:
     if i in Texts:
-        LIST_DEFINITIONS.append("x")
+        LIST_DEFINITIONS.append(i)
     else:
         LIST_DEFINITIONS.append("")
     if i in Objs:
-        LIST_3D.append("x")
+        LIST_3D.append(i)
     else:
         LIST_3D.append("")
     if i in Labels:
-        LIST_LABELS.append("x")
+        LIST_LABELS.append(i)
     else:
         LIST_LABELS.append("")
 
 
 # Write the content of the variables to the corresponding texts
 List_Definitions.write(
-    'Def \n \n' + ''.join(i + "\n" for i in LIST_DEFINITIONS))
-List_3D.write('3D \n \n' + ''.join(i + "\n" for i in LIST_3D))
-List_labels.write('Lbl \n \n' + ''.join(i + "\n" for i in LIST_LABELS))
+    ''.join(i + "\n" for i in LIST_DEFINITIONS))
+List_3D.write(''.join(i + "\n" for i in LIST_3D))
+List_labels.write(''.join(i + "\n" for i in LIST_LABELS))
