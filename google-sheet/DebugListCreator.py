@@ -95,5 +95,5 @@ for i in TA2list:
 List_Definitions.write(
     'Def \n' +
     ''.join(i + "\n" for i in LIST_DEFINITIONS))
-List_3D.write('3D \n' + ''.join(i + "\n" for i in LIST_3D))
-List_labels.write('Lbl \n' + ''.join(i + "\n" for i in LIST_LABELS))
+List_3D.write('Obj \n' + ''.join(i + "\n" for i in LIST_3D))
+List_labels.write('Labl \n' + ''.join(i + "\n" for i in LIST_LABELS))
