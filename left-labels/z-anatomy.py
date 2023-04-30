@@ -573,12 +573,21 @@ for col in bpy.data.collections:
 
 
 def clean_name(name):
-    for ending in ('.r', '.l', '.t', '.st', '.r.t', '.l.t', '.g', '.j', '.s', '.i', ''):
+    for ending in ('.r', '.l', '.t', '.s', '.i', '.st', '.ol', '.or', '.el', 'er' '.r.t', '.l.t', '.g', '.j', ''):
         if ending == '':
             return name, ending
         elif name.endswith(ending):
             clean_name = name[:-len(ending)]
             return clean_name, ending
+        else:
+            # search for e1l and e1r, o1l and o2r
+            pattern = r"\b\w+\.o\d+l\b|\b\w+\.e\d+l\b|\b\w+\.e\d+r\b|\b\w+\.o\d+r\b"
+            matches = re.search(pattern, name)
+            if (matches is not None):
+                matches = matches.group()
+                [clean_name, ending] = matches.split('.')
+                ending = '.' + ending
+                return clean_name, ending
 
 
 fonts = {
@@ -587,6 +596,9 @@ fonts = {
     'Français': 'Bfont',
     'Español': 'Bfont',
     'Portugues': 'Bfont',
+    'Italiano': 'Bfont',
+    'Hindi': 'Akshar Unicode Regular',
+    'TA2ID': 'Bfont',
 }
 
 
@@ -614,6 +626,9 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
         ('Français', 'Français', '', 2),
         ('Español', 'Español', '', 3),
         ('Portugues', 'Portugues', '', 4),
+        ('Italiano', 'Italiano', '', 5),
+        ('Hindi', 'Hindi', '', 6),
+        ('TA2ID', 'TA2ID', '', 7),
     ],
         default='English',
         name="Language")
