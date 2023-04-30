@@ -75,113 +75,113 @@ def family(object):
     return family.pop()
 
 
-class OBJECT_OT_hide_wrapper(bpy.types.Operator):
-    """Hide"""
-    bl_idname = "object.hide_wrapper"
-    bl_label = "Hide"
-    bl_options = {'REGISTER', 'UNDO'}
+# class OBJECT_OT_hide_wrapper(bpy.types.Operator):
+#     """Hide"""
+#     bl_idname = "object.hide_wrapper"
+#     bl_label = "Hide"
+#     bl_options = {'REGISTER', 'UNDO'}
 
-    unselected: bpy.props.BoolProperty(default=False, name="Hide unselected")
-    unselected_in_layer: bpy.props.BoolProperty(
-        default=False, name="From active layer")
-    follow_parent: bpy.props.BoolProperty(
-        default=True, name="Follow parent's visibility")
+#     unselected: bpy.props.BoolProperty(default=False, name="Hide unselected")
+#     unselected_in_layer: bpy.props.BoolProperty(
+#         default=False, name="From active layer")
+#     follow_parent: bpy.props.BoolProperty(
+#         default=True, name="Follow parent's visibility")
 
-    @classmethod
-    def poll(cls, context):
-        return context.mode == 'OBJECT' and context.object is not None
+#     @classmethod
+#     def poll(cls, context):
+#         return context.mode == 'OBJECT' and context.object is not None
 
-    def execute(self, context):
-        def findRoot(ob):
-            while ob and ob.parent:
-                if ob in objects_to:
-                    objects_to.remove(ob)
-                # if '%' in ob.parent.name:
-                if not any(x in ob.name for x in label_elements):
-                    return ob
-                if not ob.parent.parent and not self.unselected:
-                    return ob
-                ob = ob.parent
-            return ob
+#     def execute(self, context):
+#         def findRoot(ob):
+#             while ob and ob.parent:
+#                 if ob in objects_to:
+#                     objects_to.remove(ob)
+#                 # if '%' in ob.parent.name:
+#                 if not any(x in ob.name for x in label_elements):
+#                     return ob
+#                 if not ob.parent.parent and not self.unselected:
+#                     return ob
+#                 ob = ob.parent
+#             return ob
 
-        roots = []
-        objects_to = set(context.selected_objects)
-        while objects_to:
-            ob = objects_to.pop()
-            roots.append(findRoot(ob))
+#         roots = []
+#         objects_to = set(context.selected_objects)
+#         while objects_to:
+#             ob = objects_to.pop()
+#             roots.append(findRoot(ob))
 
-        if self.unselected and not self.unselected_in_layer:
-            all_visible_objects = set(context.visible_objects)
-            lights = {l for l in context.view_layer.objects if l.type == 'LIGHT'}
+#         if self.unselected and not self.unselected_in_layer:
+#             all_visible_objects = set(context.visible_objects)
+#             lights = {l for l in context.view_layer.objects if l.type == 'LIGHT'}
 
-            family_obs = (ob for r in roots for ob in family(r))
-            for ob in all_visible_objects-lights-set(family_obs):
-                ob.hide_set(True)
-        elif self.unselected and self.unselected_in_layer:
-            # find the layer that active object belongs to
-            all_layer_objects = set()
-            for c in context.scene.collection.children:
-                if context.object.name in c.all_objects:
-                    all_layer_objects = set(c.all_objects)
-                    break
-            lights = {l for l in context.view_layer.objects if l.type == 'LIGHT'}
+#             family_obs = (ob for r in roots for ob in family(r))
+#             for ob in all_visible_objects-lights-set(family_obs):
+#                 ob.hide_set(True)
+#         elif self.unselected and self.unselected_in_layer:
+#             # find the layer that active object belongs to
+#             all_layer_objects = set()
+#             for c in context.scene.collection.children:
+#                 if context.object.name in c.all_objects:
+#                     all_layer_objects = set(c.all_objects)
+#                     break
+#             lights = {l for l in context.view_layer.objects if l.type == 'LIGHT'}
 
-            family_obs = (ob for r in roots for ob in family(r))
-            for ob in all_layer_objects-set(family_obs)-lights:
-                ob.hide_set(True)
-        else:
-            if self.follow_parent:
-                family_obs = (ob for r in roots for ob in family_all(r))
-            else:
-                family_obs = (ob for r in roots for ob in family(r))
+#             family_obs = (ob for r in roots for ob in family(r))
+#             for ob in all_layer_objects-set(family_obs)-lights:
+#                 ob.hide_set(True)
+#         else:
+#             if self.follow_parent:
+#                 family_obs = (ob for r in roots for ob in family_all(r))
+#             else:
+#                 family_obs = (ob for r in roots for ob in family(r))
 
-            for ob in family_obs:
-                ob.hide_set(True)
+#             for ob in family_obs:
+#                 ob.hide_set(True)
 
-        return {'FINISHED'}
+#         return {'FINISHED'}
 
 
-class OBJECT_OT_hide_view_clear_wrapper(bpy.types.Operator):
-    """Show Hidden Objects"""
-    bl_idname = "object.hide_view_clear_wrapper"
-    bl_label = "Show Hidden Objects"
-    bl_options = {'REGISTER', 'UNDO'}
+# class OBJECT_OT_hide_view_clear_wrapper(bpy.types.Operator):
+#     """Show Hidden Objects"""
+#     bl_idname = "object.hide_view_clear_wrapper"
+#     bl_label = "Show Hidden Objects"
+#     bl_options = {'REGISTER', 'UNDO'}
 
-    select: bpy.props.BoolProperty()
-    active_layer: bpy.props.BoolProperty(
-        default=False, name="Affect only active layer")
+#     select: bpy.props.BoolProperty()
+#     active_layer: bpy.props.BoolProperty(
+#         default=False, name="Affect only active layer")
 
-    @classmethod
-    def poll(cls, context):
-        return context.mode == 'OBJECT'
+#     @classmethod
+#     def poll(cls, context):
+#         return context.mode == 'OBJECT'
 
-    def execute(self, context):
-        if self.active_layer:
-            for col in context.scene.collection.children:
-                if context.object.name in col.all_objects:
-                    break
+#     def execute(self, context):
+#         if self.active_layer:
+#             for col in context.scene.collection.children:
+#                 if context.object.name in col.all_objects:
+#                     break
 
-            for ob in col.all_objects:
-                ob.hide_set(False)
-        else:
-            bpy.ops.object.hide_view_clear(select=self.select)
+#             for ob in col.all_objects:
+#                 ob.hide_set(False)
+#         else:
+#             bpy.ops.object.hide_view_clear(select=self.select)
 
-        for ob in (o for o in bpy.context.visible_objects if ".t" in o.name and o != context.object):
-            if not ob.parent == context.object:
-                ob.hide_set(True)
-                for child in ob.children:
-                    child.hide_set(True)
+#         for ob in (o for o in bpy.context.visible_objects if ".t" in o.name and o != context.object):
+#             if not ob.parent == context.object:
+#                 ob.hide_set(True)
+#                 for child in ob.children:
+#                     child.hide_set(True)
 
-        for ob in (o for o in bpy.context.visible_objects if ".s" in o.name and o != context.object):
-            if not ob.parent == context.object:
-                ob.hide_set(True)
-                for child in ob.children:
-                    child.hide_set(True)
+#         for ob in (o for o in bpy.context.visible_objects if ".s" in o.name and o != context.object):
+#             if not ob.parent == context.object:
+#                 ob.hide_set(True)
+#                 for child in ob.children:
+#                     child.hide_set(True)
 
-        if not context.scene.zanatomy.enable_group_labels:
-            label_group_checkbox_update()
+#         if not context.scene.zanatomy.enable_group_labels:
+#             label_group_checkbox_update()
 
-        return {'FINISHED'}
+#         return {'FINISHED'}
 
 
 def get_user_keymap_item(keymap_name, keymap_item_idname, multiple_entries=False):
@@ -430,21 +430,20 @@ class OBJECT_OT_label_delta(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class OBJECT_OT_select_parent_children(bpy.types.Operator):
-    """Select parent and all grand children"""
-    bl_idname = "object.select_parent_children"
-    bl_label = "Select Hierarchy"
-    bl_options = {'REGISTER', 'UNDO'}
+# class OBJECT_OT_select_parent_children(bpy.types.Operator):
+#     """Select parent and all grand children"""
+#     bl_idname = "object.select_parent_children"
+#     bl_label = "Select Hierarchy"
+#     bl_options = {'REGISTER', 'UNDO'}
 
-    @classmethod
-    def poll(cls, context):
-        return context.mode == 'OBJECT' and context.object is not None
+#     @classmethod
+#     def poll(cls, context):
+#         return context.mode == 'OBJECT' and context.object is not None
 
-    def execute(self, context):
-        bpy.ops.object.select_grouped('INVOKE_DEFAULT', type='PARENT')
-        bpy.ops.object.select_grouped(
-            'INVOKE_DEFAULT', type='CHILDREN_RECURSIVE')
-        return {"FINISHED"}
+#     def execute(self, context):
+#         # bpy.ops.object.select_grouped('INVOKE_DEFAULT', type='PARENT')
+#         # bpy.ops.object.select_grouped('INVOKE_DEFAULT', type='CHILDREN_RECURSIVE')
+#         return {"FINISHED"}
 
 
 class OBJECT_OT_sync_visibility(bpy.types.Operator):
@@ -493,7 +492,7 @@ class OBJECT_OT_change_label_wrapper(bpy.types.Operator):
         return wm.invoke_props_dialog(self)
 
 
-class OBJECT_OT_local_view_wrapper(bpy.types.Operator):
+# class OBJECT_OT_local_view_wrapper(bpy.types.Operator):
     """Local view (with lights)"""
     bl_idname = "view3d.localview_lights"
     bl_label = "Local View (w/ lights)"
@@ -573,21 +572,12 @@ for col in bpy.data.collections:
 
 
 def clean_name(name):
-    for ending in ('.r', '.l', '.t', '.s', '.i', '.st', '.ol', '.or', '.el', 'er' '.r.t', '.l.t', '.g', '.j', ''):
+    for ending in ('.r', '.l', '.t', '.st', '.r.t', '.l.t', '.g', '.j', '.s', '.i', ''):
         if ending == '':
             return name, ending
         elif name.endswith(ending):
             clean_name = name[:-len(ending)]
             return clean_name, ending
-        else:
-            # search for e1l and e1r, o1l and o2r
-            pattern = r"\b\w+\.o\d+l\b|\b\w+\.e\d+l\b|\b\w+\.e\d+r\b|\b\w+\.o\d+r\b"
-            matches = re.search(pattern, name)
-            if (matches is not None):
-                matches = matches.group()
-                [clean_name, ending] = matches.split('.')
-                ending = '.' + ending
-                return clean_name, ending
 
 
 fonts = {
@@ -596,9 +586,6 @@ fonts = {
     'Français': 'Bfont',
     'Español': 'Bfont',
     'Portugues': 'Bfont',
-    'Italiano': 'Bfont',
-    'Hindi': 'Akshar Unicode Regular',
-    'TA2ID': 'Bfont',
 }
 
 
@@ -626,9 +613,6 @@ class OBJECT_OT_translate_atlas(bpy.types.Operator):
         ('Français', 'Français', '', 2),
         ('Español', 'Español', '', 3),
         ('Portugues', 'Portugues', '', 4),
-        ('Italiano', 'Italiano', '', 5),
-        ('Hindi', 'Hindi', '', 6),
-        ('TA2ID', 'TA2ID', '', 7),
     ],
         default='English',
         name="Language")
@@ -1114,6 +1098,10 @@ def msgbus_callback(*args):
         if area.type == "TEXT_EDITOR":
             text_editor_area = area
             break
+
+    if active_object.type == "FONT":
+        for child in active_object.children:
+            child.hide_set(False)
 
     if text_editor_area and basename in bpy.data.texts:
         text_editor_area.spaces[0].text = bpy.data.texts[basename]
@@ -1606,22 +1594,22 @@ class ZAnatomyProps(bpy.types.PropertyGroup):
 
 
 classes = (
-    OBJECT_OT_hide_wrapper,
-    OBJECT_OT_hide_view_clear_wrapper,
+    # OBJECT_OT_hide_wrapper,
+    # OBJECT_OT_hide_view_clear_wrapper,
     TEXT_OT_wiki_download,
     OBJECT_OT_make_label,
     OBJECT_OT_label_delta,
     OBJECT_OT_change_label_wrapper,
     OBJECT_OT_translate_atlas,
     ZANATOMY_PT_languages,
-    OBJECT_OT_local_view_wrapper,
+    # OBJECT_OT_local_view_wrapper,
     ZANATOMY_PT_Xsection,
     OBJECT_OT_collection_x_section,
     OBJECT_OT_object_x_section,
     OBJECT_OT_key_color,
     ZAnatomyProps,
     ZANATOMY_PT_labels,
-    OBJECT_OT_select_parent_children,
+    # OBJECT_OT_select_parent_children,
     ZANATOMY_PT_Key_Color,
     OBJECT_OT_sync_visibility,
     ZANATOMY_PT_Visibility,
